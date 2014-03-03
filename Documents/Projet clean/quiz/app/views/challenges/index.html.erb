@@ -1,31 +1,19 @@
-<h1>Listing challenges</h1>
+<ul>
+  <% @challenges.each do |c|%>
+  <li>
+    <% if c.champion %> 
+    <%= c.champion.first_name%> a tenté le <%= link_to "challenge #{c.id}", challenge_path(c) %> et a eu 
+        <% if c.score %> 
+        <%= c.score %> bonnes réponses
+        <% else %>
+        0 bonnes réponses
+        <% end %>
+    <% else %> 
+      Impossible de trouver le Champion de ce challenge ! Nil ? 
+    <% end %> 
+    </li>
+  <% end %>
+</ul>
 
-<table>
-  <thead>
-    <tr>
-      <th>Champion</th>
-      <th>Invite key</th>
-      <th>Score</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @challenges.each do |challenge| %>
-      <tr>
-        <td><%= challenge.champion %></td>
-        <td><%= challenge.invite_key %></td>
-        <td><%= challenge.score %></td>
-        <td><%= link_to 'Show', challenge %></td>
-        <td><%= link_to 'Edit', edit_challenge_path(challenge) %></td>
-        <td><%= link_to 'Destroy', challenge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Challenge', new_challenge_path %>
+<p><%= link_to 'Commencer un nouveau challenge', new_challenge_path, class: "btn btn-default btn-lg"%></p>

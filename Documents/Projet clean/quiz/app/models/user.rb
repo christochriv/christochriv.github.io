@@ -4,6 +4,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :challenges, foreign_key: :champion
+  has_many :challenges, foreign_key: :champion_id
   has_many :challenge_steps, foreign_key: :answerer
 end

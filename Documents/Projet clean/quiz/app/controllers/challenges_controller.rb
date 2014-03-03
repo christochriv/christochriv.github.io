@@ -1,30 +1,29 @@
 class ChallengesController < ApplicationController
   before_action :set_challenge, only: [:show, :edit, :update, :destroy]
 
-  # GET /challenges
-  # GET /challenges.json
   def index
     @challenges = Challenge.all
   end
 
-  # GET /challenges/1
-  # GET /challenges/1.json
   def show
   end
 
-  # GET /challenges/new
   def new
-    @challenge = Challenge.new
+    challenge = current_user.challenges.create
+    questions = Question.all.limit(3)
+
+    questions.each do |q|
+      challenge.challenge_step.create(question: q, answerer: current_user)
+    end
+
+    redirect_to [challenge, challenge.challenge_step.first]
   end
 
-  # GET /challenges/1/edit
   def edit
   end
 
-  # POST /challenges
-  # POST /challenges.json
   def create
-    @challenge = Challenge.new(challenge_params)
+    @challenge = current_user.challenges.build(params[:challenge])
 
     respond_to do |format|
       if @challenge.save
@@ -37,8 +36,6 @@ class ChallengesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /challenges/1
-  # PATCH/PUT /challenges/1.json
   def update
     respond_to do |format|
       if @challenge.update(challenge_params)
@@ -51,8 +48,6 @@ class ChallengesController < ApplicationController
     end
   end
 
-  # DELETE /challenges/1
-  # DELETE /challenges/1.json
   def destroy
     @challenge.destroy
     respond_to do |format|
@@ -62,13 +57,12 @@ class ChallengesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_challenge
       @challenge = Challenge.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def challenge_params
-      params.require(:challenge).permit(:champion_id, :invite_key, :score)
+      params.require(:challenge).permit(:champion, :invite_key, :score)
     end
 end

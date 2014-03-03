@@ -14,7 +14,11 @@
 ActiveRecord::Schema.define(version: 20140303173259) do
 
   create_table "answers", force: true do |t|
-    t.string   "text"
+    t.integer  "question_id"
+    t.string   "answer1"
+    t.string   "answer2"
+    t.string   "answer3"
+    t.string   "answer4"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -44,16 +48,15 @@ ActiveRecord::Schema.define(version: 20140303173259) do
 
   create_table "questions", force: true do |t|
     t.text     "query"
-    t.integer  "answer_id"
-    t.integer  "good_answer_id"
+    t.integer  "choices_id"
     t.text     "explication"
     t.text     "source_url"
-    t.integer  "points"
+    t.integer  "difficulty"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "questions", ["answer_id"], name: "index_questions_on_answer_id"
+  add_index "questions", ["choices_id"], name: "index_questions_on_choices_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
