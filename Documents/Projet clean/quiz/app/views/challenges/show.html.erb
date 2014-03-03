@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Champion:</strong>
+  <%= @challenge.champion %>
+</p>
+
+<p>
+  <strong>Invite key:</strong>
+  <%= @challenge.invite_key %>
+</p>
+
+<p>
+  <strong>Score:</strong>
+  <%= @challenge.score %>
+</p>
+
+<%= link_to 'Edit', edit_challenge_path(@challenge) %> |
+<%= link_to 'Back', challenges_path %>
